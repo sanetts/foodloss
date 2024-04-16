@@ -1,18 +1,4 @@
-No Phone number on profile detail page for security reasons
-Any one who wants to communicate must send a message
-Users who wish to receive items can send their numbers for easier access or use the messaging platform.
-<!-- Make sure that the same item is not chosen twice -->
-A message gets sent to sender so when they accept the request from the customer knowing their location, contact and prefrred time
-status changes again so no other person can access same product.
-
-<!-- How do we take care of the wait period -->
-
-
-<!-- form field that accepts preferred food items, preferred pickup time, location(check my current location or i can type)
-provide a link to the src/pages/Map page for me to check the distance -->
-
-<!-- 
-For an administrator to make informed decisions about the application, various details and metrics would be useful to track and analyze. Here are some examples:
+o make informed decisions about the application, various details and metrics would be useful to track and analyze. Here are some examples:
 
 User Engagement Metrics:
 
