@@ -45,13 +45,7 @@ const ViewProfile = () => {
             <p className="text-lg font-semibold mb-2">Email:</p>
             <p className="text-gray-700 mb-4">{userDetails.email}</p>
           </div>
-          {userId !== uid && (
-            <Link to={`/message/${uid}`}>
-              <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Send Message
-              </button>
-            </Link>
-          )}
+          
         </>
       ) : (
         <p>Loading...</p>

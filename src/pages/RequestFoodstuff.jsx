@@ -9,12 +9,35 @@ const RequestFoodStuff = () => {
   const { id } = useParams();
   const [contact, setContact] = useState("");
   const [preferredTime, setPreferredTime] = useState("");
-  const [location, setlocation] = useState("");
+  const [location, setLocation] = useState("");
+  const [start_time, setStartTime] = useState("");
+  const [end_time, setEndTime] = useState("");
   const [autocomplete, setAutocomplete] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {}, [userId]);
+  useEffect(() => {
+    // Fetch start and end times of the food item when the component mounts
+    const fetchFoodItemDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost/get_food_item_details.php?food_item_id=${id}`
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setStartTime(data.start_time);
+          setEndTime(data.end_time);
+        } else {
+          setError(data.error || "Failed to fetch food item details");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setError("Failed to fetch food item details");
+      }
+    };
+
+    fetchFoodItemDetails();
+  }, [id]);
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -40,7 +63,7 @@ const RequestFoodStuff = () => {
       const data = await response.json();
       if (data.results && data.results.length > 0) {
         const address = data.results[0].formatted_address;
-        setlocation(address);
+        setLocation(address);
         setError(null);
       } else {
         setError(
@@ -51,6 +74,7 @@ const RequestFoodStuff = () => {
       console.error("Error:", error);
     }
   };
+
   const displayError = (errorMessage) => {
     // Display error message using a modal or a custom alert dialog
     alert(errorMessage);
@@ -96,6 +120,10 @@ const RequestFoodStuff = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <div>
+        <h2>Start Time: {start_time}</h2>
+        <h2>End Time: {end_time}</h2>
+      </div>
       <div className="border border-gray-300 shadow-sm rounded-md bg-gray-200 p-6">
         <h2 className="text-2xl font-semibold mb-4 text-center">
           Request Food Stuff
@@ -144,7 +172,7 @@ const RequestFoodStuff = () => {
                     const place = autocomplete.getPlace();
                     console.log("Selected place:", place);
                     // Update the pickup location state with the selected place
-                    setlocation(place.formatted_address);
+                    setLocation(place.formatted_address);
                     setError(null);
                   }
                 }}
@@ -155,7 +183,7 @@ const RequestFoodStuff = () => {
                   placeholder="Enter pickup location or use current location"
                   className="form-input mt-1 block w-full border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={location}
-                  onChange={(e) => setlocation(e.target.value)}
+                  onChange={(e) => setLocation(e.target.value)}
                   required
                 />
               </Autocomplete>
@@ -173,12 +201,14 @@ const RequestFoodStuff = () => {
               Check Distance
             </Link>
           </div>
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            Submit Request
-          </button>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+            >
+              Request
+            </button>
+          </div>
         </form>
       </div>
     </div>

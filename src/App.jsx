@@ -19,13 +19,14 @@ import Maps from "../src/pages/Maps";
 import ReceiveFoodstuff from "../src/pages/ReceiveFoodstuff";
 import RequestFoodstuff from "../src/pages/RequestFoodstuff";
 import FoodItemDetails from "../src/pages/FoodItemDetails";
-import Message from "../src/pages/Message";
+
 import ViewProfile from "../src/pages/ViewProfile";
 import { useAuth } from "./hooks/AuthContext";
 import { UserIdProvider } from "./hooks/useUserId";
 import { ModalProvider } from "./hooks/ModalContext";
 import { useModal } from "./hooks/ModalContext";
 import "./App.css";
+import CommunityEngagement from "./pages/CommunityEngagement";
 
 function App() {
   return (
@@ -58,7 +59,7 @@ function AppContent() {
   // Function to check if a page is protected
   const isProtectedPage = (pathname) => {
     // Define your protected routes here
-    const protectedRoutes = ["/donate", "/profile", "/message"];
+    const protectedRoutes = [];
     return protectedRoutes.some((route) => pathname.startsWith(route));
   };
 
@@ -77,15 +78,12 @@ function AppContent() {
           <Route path="/food/:id" element={<FoodItemDetails />} />
           <Route path="/map" element={<Map />} />
           <Route path="/maps/:id" element={<Maps />} />
+          <Route path="/cummunity" element={<CommunityEngagement />} />
           {/* Add the Logout route */}
-          {user && (
-            <>
-              <Route path="/donate" element={<DonateFoodstuff />} />
-              <Route path="/profile/:uid" element={<ViewProfile />} />
-              <Route path="/message/:uid" element={<Message />} />
-            </>
-          )}
-          {!user && <></>}
+
+          <Route path="/donate" element={<DonateFoodstuff />} />
+          <Route path="/profile/:uid" element={<ViewProfile />} />
+          
         </Routes>
       </div>
       <Footer />
